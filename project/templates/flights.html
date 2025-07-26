@@ -1,0 +1,402 @@
+{% extends "base.html" %}
+
+{% block title %}Flight Booking - TravelGo{% endblock %}
+
+{% block content %}
+<div class="service-container">
+    <div class="service-header">
+        <div class="service-icon">✈️</div>
+        <h1>Flight Booking</h1>
+        <p>Fly to your destination with comfort and convenience</p>
+    </div>
+    <div class="search-section">
+        <div class="search-card">
+            <h3>Find Your Flight</h3>
+            <form class="search-form" method="POST" action="{{ url_for('search_flights') }}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>From</label>
+                        <select name="origin">
+                            <option>Select Origin</option>
+                            <option>Delhi</option>
+                            <option>Mumbai</option>
+                            <option>Bangalore</option>
+                            <option>Hyderabad</option>
+                            <option>Ahmedabad</option>
+                            <option>Chennai</option>
+                            <option>Kolkata</option>
+                            <option>Pune</option>
+                            <option>Jaipur</option>
+                            <option>Lucknow</option>
+                            <option>Kanpur</option>
+                            <option>Nagpur</option>
+                            <option>Indore</option>
+                            <option>Thane</option>
+                            <option>Bhopal</option>
+                            <option>Visakhapatnam</option>
+                            <option>Pimpri-Chinchwad</option>
+                            <option>Patna</option>
+                            <option>Vadodara</option>
+                            <option>Ghaziabad</option>
+                            <option>Ludhiana</option>
+                            <option>Agra</option>
+                            <option>Nashik</option>
+                            <option>Faridabad</option>
+                            <option>Meerut</option>
+                            <option>Rajkot</option>
+                            <option>Kalyan-Dombivli</option>
+                            <option>Vasai-Virar</option>
+                            <option>Varanasi</option>
+                            <option>Srinagar</option>
+                            <option>Aurangabad</option>
+                            <option>Dhanbad</option>
+                            <option>Amritsar</option>
+                            <option>Navi Mumbai</option>
+                            <option>Allahabad</option>
+                            <option>Ranchi</option>
+                            <option>Howrah</option>
+                            <option>Coimbatore</option>
+                            <option>Jabalpur</option>
+                            <option>Gwalior</option>
+                            <option>Vijayawada</option>
+                            <option>Jodhpur</option>
+                            <option>Madurai</option>
+                            <option>Raipur</option>
+                            <option>Kota</option>
+                            <option>Guwahati</option>
+                            <option>Chandigarh</option>
+                            <option>Solapur</option>
+                            <option>Hubli–Dharwad</option>
+                            <option>Bareilly</option>
+                            <option>Mysore</option>
+                            <option>Tiruchirappalli</option>
+                            <option>Moradabad</option>
+                            <option>Gurgaon</option>
+                            <option>Aligarh</option>
+                            <option>Jalandhar</option>
+                            <option>Bhubaneswar</option>
+                            <option>Salem</option>
+                            <option>Mira-Bhayandar</option>
+                            <option>Warangal</option>
+                            <option>Guntur</option>
+                            <option>Bhiwandi</option>
+                            <option>Saharanpur</option>
+                            <option>Gorakhpur</option>
+                            <option>Bikaner</option>
+                            <option>Noida</option>
+                            <option>Jamshedpur</option>
+                            <option>Bhilai</option>
+                            <option>Cuttack</option>
+                            <option>Firozabad</option>
+                            <option>Kochi</option>
+                            <option>Nellore</option>
+                            <option>Bhavnagar</option>
+                            <option>Dehradun</option>
+                            <option>Durgapur</option>
+                            <option>Asansol</option>
+                            <option>Rourkela</option>
+                            <option>Nanded</option>
+                            <option>Kolhapur</option>
+                            <option>Ajmer</option>
+                            <option>Akola</option>
+                            <option>Gulbarga</option>
+                            <option>Jamnagar</option>
+                            <option>Ujjain</option>
+                            <option>Loni</option>
+                            <option>Siliguri</option>
+                            <option>Jhansi</option>
+                            <option>Ulhasnagar</option>
+                            <option>Nellore</option>
+                            <option>Jammu</option>
+                            <option>Sangli-Miraj & Kupwad</option>
+                            <option>Mangalore</option>
+                            <option>Erode</option>
+                            <option>Belgaum</option>
+                            <option>Kurnool</option>
+                            <option>Ambattur</option>
+                            <option>Rajahmundry</option>
+                            <option>Tirunelveli</option>
+                            <option>Malegaon</option>
+                            <option>Gaya</option>
+                            <option>Udaipur</option>
+                            <option>Maheshtala</option>
+                            <option>Davanagere</option>
+                            <option>Kozhikode</option>
+                            <option>Kurnool</option>
+                            <option>Akola</option>
+                            <option>Bokaro</option>
+                            <option>Bellary</option>
+                            <option>Patiala</option>
+                            <option>Gopalpur</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>To</label>
+                        <select name="destination">
+                            <option>Select Destination</option>
+                            <option>Delhi</option>
+                            <option>Mumbai</option>
+                            <option>Bangalore</option>
+                            <option>Hyderabad</option>
+                            <option>Ahmedabad</option>
+                            <option>Chennai</option>
+                            <option>Kolkata</option>
+                            <option>Pune</option>
+                            <option>Jaipur</option>
+                            <option>Lucknow</option>
+                            <option>Kanpur</option>
+                            <option>Nagpur</option>
+                            <option>Indore</option>
+                            <option>Thane</option>
+                            <option>Bhopal</option>
+                            <option>Visakhapatnam</option>
+                            <option>Pimpri-Chinchwad</option>
+                            <option>Patna</option>
+                            <option>Vadodara</option>
+                            <option>Ghaziabad</option>
+                            <option>Ludhiana</option>
+                            <option>Agra</option>
+                            <option>Nashik</option>
+                            <option>Faridabad</option>
+                            <option>Meerut</option>
+                            <option>Rajkot</option>
+                            <option>Kalyan-Dombivli</option>
+                            <option>Vasai-Virar</option>
+                            <option>Varanasi</option>
+                            <option>Srinagar</option>
+                            <option>Aurangabad</option>
+                            <option>Dhanbad</option>
+                            <option>Amritsar</option>
+                            <option>Navi Mumbai</option>
+                            <option>Allahabad</option>
+                            <option>Ranchi</option>
+                            <option>Howrah</option>
+                            <option>Coimbatore</option>
+                            <option>Jabalpur</option>
+                            <option>Gwalior</option>
+                            <option>Vijayawada</option>
+                            <option>Jodhpur</option>
+                            <option>Madurai</option>
+                            <option>Raipur</option>
+                            <option>Kota</option>
+                            <option>Guwahati</option>
+                            <option>Chandigarh</option>
+                            <option>Solapur</option>
+                            <option>Hubli–Dharwad</option>
+                            <option>Bareilly</option>
+                            <option>Mysore</option>
+                            <option>Tiruchirappalli</option>
+                            <option>Moradabad</option>
+                            <option>Gurgaon</option>
+                            <option>Aligarh</option>
+                            <option>Jalandhar</option>
+                            <option>Bhubaneswar</option>
+                            <option>Salem</option>
+                            <option>Mira-Bhayandar</option>
+                            <option>Warangal</option>
+                            <option>Guntur</option>
+                            <option>Bhiwandi</option>
+                            <option>Saharanpur</option>
+                            <option>Gorakhpur</option>
+                            <option>Bikaner</option>
+                            <option>Noida</option>
+                            <option>Jamshedpur</option>
+                            <option>Bhilai</option>
+                            <option>Cuttack</option>
+                            <option>Firozabad</option>
+                            <option>Kochi</option>
+                            <option>Nellore</option>
+                            <option>Bhavnagar</option>
+                            <option>Dehradun</option>
+                            <option>Durgapur</option>
+                            <option>Asansol</option>
+                            <option>Rourkela</option>
+                            <option>Nanded</option>
+                            <option>Kolhapur</option>
+                            <option>Ajmer</option>
+                            <option>Akola</option>
+                            <option>Gulbarga</option>
+                            <option>Jamnagar</option>
+                            <option>Ujjain</option>
+                            <option>Loni</option>
+                            <option>Siliguri</option>
+                            <option>Jhansi</option>
+                            <option>Ulhasnagar</option>
+                            <option>Nellore</option>
+                            <option>Jammu</option>
+                            <option>Sangli-Miraj & Kupwad</option>
+                            <option>Mangalore</option>
+                            <option>Erode</option>
+                            <option>Belgaum</option>
+                            <option>Kurnool</option>
+                            <option>Ambattur</option>
+                            <option>Rajahmundry</option>
+                            <option>Tirunelveli</option>
+                            <option>Malegaon</option>
+                            <option>Gaya</option>
+                            <option>Udaipur</option>
+                            <option>Maheshtala</option>
+                            <option>Davanagere</option>
+                            <option>Kozhikode</option>
+                            <option>Kurnool</option>
+                            <option>Akola</option>
+                            <option>Bokaro</option>
+                            <option>Bellary</option>
+                            <option>Patiala</option>
+                            <option>Gopalpur</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Class</label>
+                        <select name="flight_class">
+                            <option value="Economy">Economy</option>
+                            <option value="Premium Economy">Premium Economy</option>
+                            <option value="Business">Business</option>
+                            <option value="First">First</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Search Flights</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Always show some available flights -->
+    <div class="results-section">
+        <h2>Available Flights</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <div class="service-info">
+                    <div class="service-title">
+                        <h3>IndiGo</h3>
+                        <div class="service-route">Delhi → Mumbai</div>
+                    </div>
+                    <div class="service-details">
+                        <div class="detail-item"><span class="detail-label">Departure:</span> <span class="detail-value">08:30</span></div>
+                        <div class="detail-item"><span class="detail-label">Duration:</span> <span class="detail-value">2h 15m</span></div>
+                        <div class="detail-item"><span class="detail-label">Class:</span> <span class="detail-value">Economy</span></div>
+                        <div class="detail-item"><span class="detail-label">Price:</span> <span class="detail-price">₹4500</span></div>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <div class="amenities">
+                        <span class="amenity">🍽️ Meals</span>
+                        <span class="amenity">📺 Entertainment</span>
+                        <span class="amenity">🧳 Baggage</span>
+                    </div>
+                    {% if session.user_email %}
+                        <a href="{{ url_for('book_service', service_type='flight', service_id=101) }}" class="btn btn-primary">Book Now</a>
+                    {% else %}
+                        <a href="{{ url_for('signin') }}" class="btn btn-primary">Sign In to Book</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-info">
+                    <div class="service-title">
+                        <h3>SpiceJet</h3>
+                        <div class="service-route">Bangalore → Hyderabad</div>
+                    </div>
+                    <div class="service-details">
+                        <div class="detail-item"><span class="detail-label">Departure:</span> <span class="detail-value">14:45</span></div>
+                        <div class="detail-item"><span class="detail-label">Duration:</span> <span class="detail-value">1h 30m</span></div>
+                        <div class="detail-item"><span class="detail-label">Class:</span> <span class="detail-value">Economy</span></div>
+                        <div class="detail-item"><span class="detail-label">Price:</span> <span class="detail-price">₹3200</span></div>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <div class="amenities">
+                        <span class="amenity">🍽️ Meals</span>
+                        <span class="amenity">📺 Entertainment</span>
+                        <span class="amenity">🧳 Baggage</span>
+                    </div>
+                    {% if session.user_email %}
+                        <a href="{{ url_for('book_service', service_type='flight', service_id=102) }}" class="btn btn-primary">Book Now</a>
+                    {% else %}
+                        <a href="{{ url_for('signin') }}" class="btn btn-primary">Sign In to Book</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-info">
+                    <div class="service-title">
+                        <h3>Air India</h3>
+                        <div class="service-route">Chennai → Delhi</div>
+                    </div>
+                    <div class="service-details">
+                        <div class="detail-item"><span class="detail-label">Departure:</span> <span class="detail-value">19:20</span></div>
+                        <div class="detail-item"><span class="detail-label">Duration:</span> <span class="detail-value">2h 45m</span></div>
+                        <div class="detail-item"><span class="detail-label">Class:</span> <span class="detail-value">Business</span></div>
+                        <div class="detail-item"><span class="detail-label">Price:</span> <span class="detail-price">₹5800</span></div>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <div class="amenities">
+                        <span class="amenity">🍽️ Meals</span>
+                        <span class="amenity">📺 Entertainment</span>
+                        <span class="amenity">🧳 Baggage</span>
+                    </div>
+                    {% if session.user_email %}
+                        <a href="{{ url_for('book_service', service_type='flight', service_id=103) }}" class="btn btn-primary">Book Now</a>
+                    {% else %}
+                        <a href="{{ url_for('signin') }}" class="btn btn-primary">Sign In to Book</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if flights %}
+    <div class="results-section">
+        <h2>Available Flights</h2>
+        <div class="service-grid">
+            {% for flight in flights %}
+            <div class="service-card">
+                <div class="service-info">
+                    <div class="service-title">
+                        <h3>{{ flight.airline }}</h3>
+                        <div class="service-route">{{ flight.from }} → {{ flight.to }}</div>
+                    </div>
+                    <div class="service-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Departure:</span>
+                            <span class="detail-value">{{ flight.time }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">{{ flight.duration }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Class:</span>
+                            <span class="detail-value">{{ flight.flight_class }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-price">₹{{ flight.price }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <div class="amenities">
+                        <span class="amenity">🍽️ Meals</span>
+                        <span class="amenity">📺 Entertainment</span>
+                        <span class="amenity">🧳 Baggage</span>
+                    </div>
+                    {% if session.user_email %}
+                        <a href="{{ url_for('book_service', service_type='flight', service_id=flight.id) }}" 
+                           class="btn btn-primary">Book Now</a>
+                    {% else %}
+                        <a href="{{ url_for('signin') }}" class="btn btn-primary">Sign In to Book</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

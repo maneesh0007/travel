@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>Welcome to TravelGo</h1>
+        <p>Your one-stop destination for all travel bookings</p>
+        <div class="hero-buttons">
+            {% if not session.user_email %}
+                <a href="{{ url_for('signup') }}" class="btn btn-primary">Get Started</a>
+                <a href="{{ url_for('signin') }}" class="btn btn-secondary">Sign In</a>
+            {% else %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="services-section">
+    <div class="container">
+        <h2>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚌</div>
+                <h3>Bus Booking</h3>
+                <p>Book comfortable bus rides across the country</p>
+                <a href="{{ url_for('buses') }}" class="btn btn-outline">Book Now</a>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🚂</div>
+                <h3>Train Booking</h3>
+                <p>Reserve train tickets for your journey</p>
+                <a href="{{ url_for('trains') }}" class="btn btn-outline">Book Now</a>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">✈️</div>
+                <h3>Flight Booking</h3>
+                <p>Fly to your destination with ease</p>
+                <a href="{{ url_for('flights') }}" class="btn btn-outline">Book Now</a>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🏨</div>
+                <h3>Hotel Booking</h3>
+                <p>Find the perfect stay for your trip</p>
+                <a href="{{ url_for('hotels') }}" class="btn btn-outline">Book Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container">
+        <h2>Why Choose TravelGo?</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <h4>Real-time Booking</h4>
+                <p>Instant confirmations and updates</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔒</div>
+                <h4>Secure Payments</h4>
+                <p>Safe and encrypted transactions</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <h4>Easy Management</h4>
+                <p>Manage all bookings in one place</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <h4>Best Prices</h4>
+                <p>Competitive rates guaranteed</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

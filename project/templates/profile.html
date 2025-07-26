@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - TravelGo{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <div class="avatar-circle">{{ user.name[0].upper() if user.name else 'U' }}</div>
+        </div>
+        <div class="profile-info">
+            <h1>{{ user.name or 'User' }}</h1>
+            <p>{{ user.email or 'No email' }}</p>
+        </div>
+    </div>
+    
+    <div class="profile-content">
+        <div class="profile-section">
+            <h2>Personal Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Full Name</label>
+                    <p>{{ user.name or 'Not provided' }}</p>
+                </div>
+                <div class="info-item">
+                    <label>Email Address</label>
+                    <p>{{ user.email or 'Not provided' }}</p>
+                </div>
+                <div class="info-item">
+                    <label>Phone Number</label>
+                    <p>{{ user.phone or 'Not provided' }}</p>
+                </div>
+                <div class="info-item">
+                    <label>Member Since</label>
+                    <p>{{ user.created_at[:10] if user.created_at else 'Unknown' }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h2>Account Settings</h2>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-icon">🔔</div>
+                    <div class="setting-info">
+                        <h4>Email Notifications</h4>
+                        <p>Receive booking confirmations and updates</p>
+                    </div>
+                    <div class="setting-toggle">
+                        <span class="toggle-status">Enabled</span>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">🔒</div>
+                    <div class="setting-info">
+                        <h4>Account Security</h4>
+                        <p>Manage your password and security settings</p>
+                    </div>
+                    <div class="setting-toggle">
+                        <span class="toggle-status">Secure</span>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">💳</div>
+                    <div class="setting-info">
+                        <h4>Payment Methods</h4>
+                        <p>Manage your saved payment options</p>
+                    </div>
+                    <div class="setting-toggle">
+                        <span class="toggle-status">Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

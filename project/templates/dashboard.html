@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - TravelGo{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Welcome back, {{ session.user_name }}!</h1>
+        <p>Manage your bookings and explore new destinations</p>
+    </div>
+    
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+                <h3>{{ bookings|length }}</h3>
+                <p>Total Bookings</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+                <h3>{{ bookings|selectattr('status', 'equalto', 'Confirmed')|list|length }}</h3>
+                <p>Active Bookings</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">❌</div>
+            <div class="stat-info">
+                <h3>{{ bookings|selectattr('status', 'equalto', 'Cancelled')|list|length }}</h3>
+                <p>Cancelled</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="quick-actions">
+        <h2>Quick Book</h2>
+        <div class="action-grid">
+            <a href="{{ url_for('buses') }}" class="action-card">
+                <div class="action-icon">🚌</div>
+                <span>Book Bus</span>
+            </a>
+            <a href="{{ url_for('trains') }}" class="action-card">
+                <div class="action-icon">🚂</div>
+                <span>Book Train</span>
+            </a>
+            <a href="{{ url_for('flights') }}" class="action-card">
+                <div class="action-icon">✈️</div>
+                <span>Book Flight</span>
+            </a>
+            <a href="{{ url_for('hotels') }}" class="action-card">
+                <div class="action-icon">🏨</div>
+                <span>Book Hotel</span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="bookings-section">
+        <h2>Your Bookings</h2>
+        {% if bookings %}
+            <div class="bookings-grid">
+                {% for booking in bookings %}
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div class="booking-type">
+                            {% if booking.service_type == 'bus' %}🚌
+                            {% elif booking.service_type == 'train' %}🚂
+                            {% elif booking.service_type == 'flight' %}✈️
+                            {% elif booking.service_type == 'hotel' %}🏨
+                            {% endif %}
+                            {{ booking.service_type.title() }}
+                        </div>
+                        <div class="booking-status status-{{ booking.status.lower() }}">
+                            {{ booking.status }}
+                        </div>
+                    </div>
+                    <div class="booking-details">
+                        <h4>{{ booking.service_name }}</h4>
+                        <p>Price: ₹{{ booking.price }}</p>
+                        <p>Booked: {{ booking.booking_date[:10] }}</p>
+                        <p>Payment: {{ booking.payment_method }}</p>
+                    </div>
+                    {% if booking.status == 'Confirmed' %}
+                    <div class="booking-actions">
+                        <a href="{{ url_for('cancel_booking', booking_id=booking.booking_id) }}" 
+                           class="btn btn-danger btn-small"
+                           onclick="return confirm('Are you sure you want to cancel this booking?')">
+                           Cancel Booking
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-bookings">
+                <div class="no-bookings-icon">📝</div>
+                <h3>No bookings yet</h3>
+                <p>Start planning your next adventure!</p>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">Explore Services</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

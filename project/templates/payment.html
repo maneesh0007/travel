@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Payment - TravelGo{% endblock %}
+
+{% block content %}
+<div class="payment-container">
+    <div class="payment-header">
+        <h1>Secure Payment</h1>
+        <p>Complete your booking with our secure payment system</p>
+    </div>
+    
+    <div class="payment-content">
+        <div class="payment-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-card">
+                <div class="summary-item">
+                    <span>Service:</span>
+                    <span>{{ service_name }}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Type:</span>
+                    <span>{{ service_type.title() }}</span>
+                </div>
+                <div class="summary-item total">
+                    <span>Total Amount:</span>
+                    <span class="price">₹{{ price }}</span>
+                </div>
+            </div>
+            
+            <div class="security-info">
+                <div class="security-item">
+                    <span class="security-icon">🔒</span>
+                    <span>SSL Encrypted</span>
+                </div>
+                <div class="security-item">
+                    <span class="security-icon">🛡️</span>
+                    <span>Secure Payment</span>
+                </div>
+                <div class="security-item">
+                    <span class="security-icon">✅</span>
+                    <span>Instant Confirmation</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="payment-form">
+            <h2>Payment Details</h2>
+            <form method="POST" action="{{ url_for('process_payment') }}">
+                <input type="hidden" name="service_type" value="{{ service_type }}">
+                <input type="hidden" name="service_id" value="{{ service_id }}">
+                <input type="hidden" name="service_name" value="{{ service_name }}">
+                <input type="hidden" name="price" value="{{ price }}">
+                
+                <div class="payment-methods">
+                    <h3>Select Payment Method</h3>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" value="Credit Card" checked>
+                            <div class="option-content">
+                                <span class="option-icon">💳</span>
+                                <span>Credit Card</span>
+                            </div>
+                        </label>
+                        
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" value="Debit Card">
+                            <div class="option-content">
+                                <span class="option-icon">💳</span>
+                                <span>Debit Card</span>
+                            </div>
+                        </label>
+                        
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" value="UPI">
+                            <div class="option-content">
+                                <span class="option-icon">📱</span>
+                                <span>UPI</span>
+                            </div>
+                        </label>
+                        
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" value="Net Banking">
+                            <div class="option-content">
+                                <span class="option-icon">🏦</span>
+                                <span>Net Banking</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="card-details">
+                    <h3>Card Details</h3>
+                    <div class="form-group">
+                        <label for="card_number">Card Number</label>
+                        <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry_date">Expiry Date</label>
+                            <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardholder_name">Cardholder Name</label>
+                        <input type="text" id="cardholder_name" name="cardholder_name" placeholder="Name on card">
+                    </div>
+                </div>
+                
+                <div class="payment-actions">
+                    <button type="button" onclick="history.back()" class="btn btn-secondary">Back</button>
+                    <button type="submit" class="btn btn-primary">Pay ₹{{ price }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Format card number input
+document.getElementById('card_number').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+    e.target.value = formattedValue;
+});
+
+// Format expiry date input
+document.getElementById('expiry_date').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    e.target.value = value;
+});
+
+// Only allow numbers in CVV
+document.getElementById('cvv').addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+});
+</script>
+{% endblock %}

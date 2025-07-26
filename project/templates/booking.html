@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Book {{ service_type.title() }} - TravelGo{% endblock %}
+
+{% block content %}
+<div class="booking-container">
+    <div class="booking-header">
+        <h1>Complete Your Booking</h1>
+        <p>Review your selection and proceed to payment</p>
+    </div>
+    
+    <div class="booking-content">
+        <div class="booking-summary">
+            <h2>Booking Summary</h2>
+            <div class="summary-card">
+                <div class="summary-header">
+                    <div class="service-type-icon">
+                        {% if service_type == 'bus' %}🚌
+                        {% elif service_type == 'train' %}🚂
+                        {% elif service_type == 'flight' %}✈️
+                        {% elif service_type == 'hotel' %}🏨
+                        {% endif %}
+                    </div>
+                    <div class="service-info">
+                        <h3>
+                            {% if service_type == 'flight' %}{{ service.airline }}
+                            {% else %}{{ service.name }}
+                            {% endif %}
+                        </h3>
+                        <p>
+                            {% if service_type == 'hotel' %}
+                                {{ service.location }} - {{ service.type }}
+                            {% else %}
+                                {{ service.from }} → {{ service.to }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="summary-details">
+                    {% if service_type != 'hotel' %}
+                    <div class="detail-row">
+                        <span>Departure Time:</span>
+                        <span>{{ service.time }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Duration:</span>
+                        <span>{{ service.duration }}</span>
+                    </div>
+                    {% else %}
+                    <div class="detail-row">
+                        <span>Rating:</span>
+                        <span>{% for i in range(service.rating) %}⭐{% endfor %}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Type:</span>
+                        <span>{{ service.type }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="detail-row total">
+                        <span>Total Amount:</span>
+                        <span class="price">₹{{ service.price }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="booking-form">
+            <h2>Passenger Details</h2>
+            <form method="POST" action="{{ url_for('payment') }}">
+                <input type="hidden" name="service_type" value="{{ service_type }}">
+                <input type="hidden" name="service_id" value="{{ service.id }}">
+                <input type="hidden" name="service_name" value="{% if service_type == 'flight' %}{{ service.airline }}{% else %}{{ service.name }}{% endif %}">
+                <input type="hidden" name="price" value="{{ service.price }}">
+                
+                <div class="form-group">
+                    <label for="passenger_name">Full Name</label>
+                    <input type="text" id="passenger_name" name="passenger_name" value="{{ session.user_name }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="passenger_email">Email</label>
+                    <input type="email" id="passenger_email" name="passenger_email" value="{{ session.user_email }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="passenger_phone">Phone Number</label>
+                    <input type="tel" id="passenger_phone" name="passenger_phone" required>
+                </div>
+                
+                {% if service_type != 'hotel' %}
+                <div class="form-group">
+                    <label for="passenger_age">Age</label>
+                    <input type="number" id="passenger_age" name="passenger_age" min="1" max="120" required>
+                </div>
+                {% endif %}
+                
+                {% if service_type == 'hotel' %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checkin_date">Check-in Date</label>
+                        <input type="date" id="checkin_date" name="checkin_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkout_date">Check-out Date</label>
+                        <input type="date" id="checkout_date" name="checkout_date" required>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="special_requests">Special Requests (Optional)</label>
+                    <textarea id="special_requests" name="special_requests" rows="3" placeholder="Any special requirements or requests..."></textarea>
+                </div>
+                
+                <div class="booking-actions">
+                    {% if service_type == 'bus' %}
+                        <a href="{{ url_for('buses') }}" class="btn btn-secondary">Back to Buses</a>
+                    {% elif service_type == 'train' %}
+                        <a href="{{ url_for('trains') }}" class="btn btn-secondary">Back to Trains</a>
+                    {% elif service_type == 'flight' %}
+                        <a href="{{ url_for('flights') }}" class="btn btn-secondary">Back to Flights</a>
+                    {% elif service_type == 'hotel' %}
+                        <a href="{{ url_for('hotels') }}" class="btn btn-secondary">Back to Hotels</a>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

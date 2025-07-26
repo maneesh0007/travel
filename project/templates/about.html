@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}About - TravelGo{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <div class="about-hero">
+        <h1>About TravelGo</h1>
+        <p>Your trusted companion for seamless travel experiences</p>
+    </div>
+    
+    <div class="about-content">
+        <div class="about-section">
+            <h2>Our Mission</h2>
+            <p>TravelGo is dedicated to simplifying travel booking by providing a unified platform where users can effortlessly reserve buses, trains, flights, and hotels. We believe that planning your journey should be as exciting as the destination itself.</p>
+        </div>
+        
+        <div class="about-section">
+            <h2>What We Offer</h2>
+            <div class="features-list">
+                <div class="feature-item">
+                    <div class="feature-icon">🚌</div>
+                    <div class="feature-content">
+                        <h4>Bus Booking</h4>
+                        <p>Comfortable and affordable bus rides across the country with dynamic seat selection</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🚂</div>
+                    <div class="feature-content">
+                        <h4>Train Reservations</h4>
+                        <p>Quick and easy train ticket booking with real-time availability</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">✈️</div>
+                    <div class="feature-content">
+                        <h4>Flight Booking</h4>
+                        <p>Domestic and international flight bookings with competitive prices</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🏨</div>
+                    <div class="feature-content">
+                        <h4>Hotel Stays</h4>
+                        <p>From luxury to budget accommodations, find the perfect stay</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="about-section">
+            <h2>Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h4>Backend</h4>
+                    <p>Flask framework for robust server-side operations</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Database</h4>
+                    <p>AWS DynamoDB for scalable data storage</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Cloud</h4>
+                    <p>AWS EC2 for reliable hosting and deployment</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Notifications</h4>
+                    <p>AWS SNS for real-time booking confirmations</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="about-section">
+            <h2>Why Choose Us?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <h4>🔒 Secure & Safe</h4>
+                    <p>Your data and payments are protected with industry-standard security</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>⚡ Real-time Updates</h4>
+                    <p>Instant notifications and booking confirmations via email</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>📱 User-friendly</h4>
+                    <p>Intuitive interface designed for seamless user experience</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>🌍 Comprehensive</h4>
+                    <p>All your travel needs in one convenient platform</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="about-cta">
+            <h2>Ready to Start Your Journey?</h2>
+            <p>Join thousands of satisfied travelers who trust TravelGo for their booking needs</p>
+            {% if not session.user_email %}
+                <a href="{{ url_for('signup') }}" class="btn btn-primary">Get Started Today</a>
+            {% else %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TravelGo - Your Travel Companion{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/travelgo.css') }}">
+    <style>
+    body {
+        background: linear-gradient(135deg, #3949ab 0%, #00bcd4 100%);
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    .main-content {
+        background: rgba(255,255,255,0.93);
+        box-shadow: 0 2px 24px rgba(26,35,126,0.13);
+    }
+    .navbar {
+        background: rgba(26,35,126,0.98);
+        border-bottom: 3px solid #ffc107;
+    }
+    .nav-menu {
+        display: flex;
+        gap: 1.2rem;
+    }
+    .nav-link {
+        color: #fff;
+        background: #3949ab;
+        border-radius: 6px;
+        padding: 0.5rem 1.2rem;
+        font-weight: 600;
+        font-size: 1.08rem;
+        letter-spacing: 0.5px;
+        box-shadow: 0 1px 4px rgba(26,35,126,0.08);
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+        text-decoration: none;
+        border: 1.5px solid transparent;
+    }
+    .nav-link:hover, .nav-link.active {
+        background: #ffc107;
+        color: #1a237e;
+        border: 1.5px solid #fff;
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 2px 12px rgba(255,193,7,0.13);
+    }
+    .nav-logo h2 {
+        color: #ffc107;
+        text-shadow: 1px 2px 8px #1a237e33;
+    }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🌍 TravelGo</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                {% if session.user_email %}
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+                    <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+                    <a href="{{ url_for('about') }}" class="nav-link">About</a>
+                    <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('about') }}" class="nav-link">About</a>
+                    <a href="{{ url_for('signin') }}" class="nav-link">Sign In</a>
+                    <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 TravelGo. All rights reserved. | Your trusted travel companion</p>
+        </div>
+    </footer>
+</body>
+</html>

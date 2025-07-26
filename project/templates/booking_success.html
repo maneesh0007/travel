@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Booking Confirmed - TravelGo{% endblock %}
+
+{% block content %}
+<div class="success-container">
+    <div class="success-content">
+        <div class="success-icon">✅</div>
+        <h1>Booking Confirmed!</h1>
+        <p>Your payment has been processed successfully</p>
+        
+        <div class="booking-details">
+            <h2>Booking Details</h2>
+            <div class="details-card">
+                <div class="detail-row">
+                    <span>Booking ID:</span>
+                    <span class="booking-id">{{ booking.booking_id[:8] }}...</span>
+                </div>
+                <div class="detail-row">
+                    <span>Service:</span>
+                    <span>{{ booking.service_name }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Type:</span>
+                    <span>{{ booking.service_type.title() }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Amount Paid:</span>
+                    <span class="price">₹{{ booking.price }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Payment Method:</span>
+                    <span>{{ booking.payment_method }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Status:</span>
+                    <span class="status-confirmed">{{ booking.status }}</span>
+                </div>
+                <div class="detail-row">
+                    <span colspan="2" style="color:#007bff; font-weight:500; margin-top:1rem;">A confirmation email has been sent to <b>{{ booking.user_email }}</b> (mock).</span>
+                </div>
+                <div class="detail-row" style="justify-content:center; margin-top:1.5rem;">
+                    <button class="btn btn-primary" onclick="window.print()" style="margin-right:1rem;">Print</button>
+                    <button class="btn btn-primary" onclick="downloadBooking()">Download</button>
+                </div>
+                <script>
+                function downloadBooking() {
+                    var text = document.querySelector('.details-card').innerText;
+                    var blob = new Blob([text], {type: 'text/plain'});
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'booking_details.txt';
+                    link.click();
+                }
+                </script>
+                <div class="detail-row">
+                    <span colspan="2" style="color:#007bff; font-weight:500; margin-top:1rem;">A confirmation email has been sent to <b>{{ booking.user_email }}</b> (mock).</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="next-steps">
+            <h3>What's Next?</h3>
+            <div class="steps-list">
+                <div class="step-item">
+                    <span class="step-icon">📧</span>
+                    <span>Confirmation email sent to your registered email</span>
+                </div>
+                <div class="step-item">
+                    <span class="step-icon">📱</span>
+                    <span>SMS confirmation sent to your mobile number</span>
+                </div>
+                <div class="step-item">
+                    <span class="step-icon">🎫</span>
+                    <span>E-ticket available in your dashboard</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="success-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">View Dashboard</a>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Book Another</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
