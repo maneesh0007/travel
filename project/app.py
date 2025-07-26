@@ -1,23 +1,15 @@
-@app.route('/search_hotels', methods=['POST'])
-def search_hotels():
-    location = request.form.get('location')
-    checkin = request.form.get('checkin')
-    checkout = request.form.get('checkout')
-    guests = request.form.get('guests')
-    # Filter hotels by location (city)
-    filtered_hotels = [hotel for hotel in HOTELS if hotel['location'].lower() == location.lower()] if location and location != 'Select City' else HOTELS
-    return render_template('hotels.html', hotels=filtered_hotels, selected_location=location, checkin=checkin, checkout=checkout, guests=guests)
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import boto3
 from werkzeug.security import generate_password_hash, check_password_hash
 import uuid
 from datetime import datetime
 import os
 
+# ✅ Initialize Flask app
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'
 
-# AWS Configuration
+# ✅ AWS Configuration
 AWS_REGION = 'us-east-1'
 USERS_TABLE = 'fixtinow_user'
 SERVICES_TABLE = 'fixtinow_service'
@@ -31,7 +23,7 @@ users_table = dynamodb.Table(USERS_TABLE)
 services_table = dynamodb.Table(SERVICES_TABLE)
 bookings_table = dynamodb.Table(BOOKINGS_TABLE)
 
-# Static sample data
+# ✅ Static sample data
 BUSES = [
     {'id': 1, 'name': 'Volvo AC Sleeper', 'from': 'Hyderabad', 'to': 'Bangalore', 'price': 800, 'time': '22:00', 'duration': '8h'},
     {'id': 2, 'name': 'Mercedes Multi-Axle', 'from': 'Chennai', 'to': 'Coimbatore', 'price': 650, 'time': '23:30', 'duration': '6h'},
@@ -48,9 +40,6 @@ FLIGHTS = [
     {'id': 1, 'airline': 'IndiGo', 'from': 'Delhi', 'to': 'Mumbai', 'price': 4500, 'time': '08:30', 'duration': '2h 15m'},
     {'id': 2, 'airline': 'SpiceJet', 'from': 'Bangalore', 'to': 'Hyderabad', 'price': 3200, 'time': '14:45', 'duration': '1h 30m'},
     {'id': 3, 'airline': 'Air India', 'from': 'Chennai', 'to': 'Delhi', 'price': 5800, 'time': '19:20', 'duration': '2h 45m'},
-    {'id': 101, 'airline': 'IndiGo', 'from': 'Delhi', 'to': 'Mumbai', 'price': 4500, 'time': '08:30', 'duration': '2h 15m', 'flight_class': 'Economy'},
-    {'id': 102, 'airline': 'SpiceJet', 'from': 'Bangalore', 'to': 'Hyderabad', 'price': 3200, 'time': '14:45', 'duration': '1h 30m', 'flight_class': 'Economy'},
-    {'id': 103, 'airline': 'Air India', 'from': 'Chennai', 'to': 'Delhi', 'price': 5800, 'time': '19:20', 'duration': '2h 45m', 'flight_class': 'Business'},
 ]
 
 HOTELS = [
@@ -59,9 +48,24 @@ HOTELS = [
     {'id': 3, 'name': 'Budget Stay', 'location': 'Delhi', 'price': 1500, 'rating': 3, 'type': 'Budget'},
 ]
 
+# ✅ Routes
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# ✅ Hotel Search
+@app.route('/search_hotels', methods=['POST'])
+def search_hotels():
+    location = request.form.get('location')
+    checkin = request.form.get('checkin')
+    checkout = request.form.get('checkout')
+    guests = request.form.get('guests')
+
+    filtered_hotels = [hotel for hotel in HOTELS if hotel['location'].lower() == location.lower()] \
+        if location and location != 'Select City' else HOTELS
+
+    return render_template('hotels.html', hotels=filtered_hotels, selected_location=location, checkin=checkin, checkout=checkout, guests=guests)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -210,7 +214,6 @@ def process_payment():
     try:
         bookings_table.put_item(Item=booking_data)
 
-        # Optional: Send notification via SNS
         sns_client.publish(
             TopicArn=SNS_TOPIC_ARN,
             Message=f"Booking Confirmed: {booking_id} for {session['user_email']}",
@@ -246,8 +249,9 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-# For AWS Elastic Beanstalk WSGI compatibility
+# ✅ For AWS Elastic Beanstalk WSGI compatibility
 application = app
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=5000, debug=True)
+
