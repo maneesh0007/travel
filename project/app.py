@@ -22,7 +22,7 @@ AWS_REGION = 'us-east-1'
 USERS_TABLE = 'fixtinow_user'
 SERVICES_TABLE = 'fixtinow_service'
 BOOKINGS_TABLE = 'bookings'
-SNS_TOPIC_ARN = 'arn:aws:sns:us-east-1:604665149129:fixtinow_Topic'
+SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:047719615036:fixitnow_topic"
 
 dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
 sns_client = boto3.client('sns', region_name=AWS_REGION)
