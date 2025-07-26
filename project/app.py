@@ -55,7 +55,7 @@ def index():
     return render_template('index.html')
 
 # ✅ Hotel Search
-@app.route('/search_hotels', methods=['POST'])
+@app.route('/search_hotels', methods=['GET','POST'])
 def search_hotels():
     location = request.form.get('location')
     checkin = request.form.get('checkin')
